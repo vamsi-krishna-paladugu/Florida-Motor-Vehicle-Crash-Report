@@ -1,6 +1,4 @@
-﻿const apiUrl = 'https://cors-anywhere.herokuapp.com/https://crashviewer.nhtsa.dot.gov/CrashAPI/crashes/GetCrashesByLocation?fromCaseYear=2021&toCaseYear=2024&state=12&county=1&format=json';
-
-document.addEventListener("DOMContentLoaded", () => {
+﻿document.addEventListener("DOMContentLoaded", () => {
     const accidentsTable = document.getElementById("report").querySelector("tbody");
     const accidentForm = document.getElementById("accidentForm");
     const addBtn = document.getElementById("add-btn");
@@ -10,24 +8,276 @@ document.addEventListener("DOMContentLoaded", () => {
     var closeBtn = document.querySelector(".close");
     let accidentsData = [];
 
+    const crashes =
+        [
+            {
+                "CITY": "1130",
+                "CITYNAME": "GAINESVILLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.65944722",
+                "LONGITUD": "-82.335183330",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120026",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "NW 8TH AVE",
+                "TWAY_ID2": "NW 10TH ST",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.73055000",
+                "LONGITUD": "-82.141238890",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120034",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "US-301",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "1130",
+                "CITYNAME": "GAINESVILLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.69981389",
+                "LONGITUD": "-82.370869440",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120106",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "SR-121 ",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2021",
+                "FATALS": "1",
+                "LATITUDE": "29.65405833",
+                "LONGITUD": "-82.523455560",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120149",
+                "TOTALVEHICLES": "2",
+                "TWAY_ID": "SR-26",
+                "TWAY_ID2": "CR-241",
+                "VE_FORMS": "2"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2021",
+                "FATALS": "1",
+                "LATITUDE": "29.74358056",
+                "LONGITUD": "-82.388108330",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120201",
+                "TOTALVEHICLES": "3",
+                "TWAY_ID": "US-441",
+                "TWAY_ID2": "NW 43RD ST",
+                "VE_FORMS": "3"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.49499167",
+                "LONGITUD": "-82.406833330",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120212",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "SR-121",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "1320",
+                "CITYNAME": "HAWTHORNE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.60893056",
+                "LONGITUD": "-82.090380560",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120263",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "US-301",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "1130",
+                "CITYNAME": "GAINESVILLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.65971111",
+                "LONGITUD": "-82.414783330",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120348",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "SR-26 ",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.70868056",
+                "LONGITUD": "-82.062522220",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120365",
+                "TOTALVEHICLES": "2",
+                "TWAY_ID": "SR-26",
+                "TWAY_ID2": "",
+                "VE_FORMS": "2"
+            },
+            {
+                "CITY": "1130",
+                "CITYNAME": "GAINESVILLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2021",
+                "FATALS": "1",
+                "LATITUDE": "29.69002778",
+                "LONGITUD": "-82.305780560",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120409",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "15TH ST",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "1130",
+                "CITYNAME": "GAINESVILLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.69523889",
+                "LONGITUD": "-82.339155560",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120428",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "US-441 ",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "1130",
+                "CITYNAME": "GAINESVILLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2021",
+                "FATALS": "1",
+                "LATITUDE": "29.65225278",
+                "LONGITUD": "-82.366380560",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120464",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "SR-26",
+                "TWAY_ID2": "29TH ST",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.68087500",
+                "LONGITUD": "-82.078263890",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120527",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "CR-219A",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.53668056",
+                "LONGITUD": "-82.324411110",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120534",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "I-75",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            },
+            {
+                "CITY": "0",
+                "CITYNAME": "NOT APPLICABLE",
+                "COUNTY": "1",
+                "COUNTYNAME": "ALACHUA (1)",
+                "CaseYear": "2022",
+                "FATALS": "1",
+                "LATITUDE": "29.52421944",
+                "LONGITUD": "-82.523280560",
+                "STATE": "12",
+                "STATENAME": "Florida",
+                "ST_CASE": "120549",
+                "TOTALVEHICLES": "1",
+                "TWAY_ID": "CR-241",
+                "TWAY_ID2": "",
+                "VE_FORMS": "1"
+            }
+        ]
+
     // Fetch and display accidents
     async function fetchAccidents() {
         try {
-            // Check if accidents data is saved in localStorage
             const storedAccidents = localStorage.getItem("accidentsData");
             if (storedAccidents) {
-                // If found in localStorage, use the stored data
                 accidentsData = JSON.parse(storedAccidents);
-                renderAccidentsTable();
-                generateVisuals();
             } else {
-                // Otherwise, fetch data from API
-                const response = await fetch(apiUrl);
-                const accidents = await response.json();
-                accidentsData = accidents.Results.flat();
-                renderAccidentsTable();
-                generateVisuals();
+                accidentsData = crashes;
             }
+            renderAccidentsTable();
+            generateVisuals();
         } catch (error) {
             console.error("Error fetching data: ", error);
         }
@@ -239,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // Reset form
     function resetForm() {
         accidentForm.reset();
-        document.getElementById("accidentForm").value = '';
+        document.getElementById("accidentId").value = '';
         editMode = false;
     }
 
